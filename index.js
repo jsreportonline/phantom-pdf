@@ -3,6 +3,12 @@ var toArray = require('stream-to-array')
 const conversion = require('phantom-html-to-pdf')()
 
 const server = http.createServer((req, res) => {
+  if (req.method === 'GET') {
+    res.statusCode = 200
+    res.setHeader('Content-Type', 'text/plain')
+    return res.end('OK')
+  }
+  
   var data = ''
   req.on('data', function (chunk) {
     data += chunk.toString()
