@@ -18,7 +18,8 @@
   "homepage": "https://github.com/jsreportonline/phantom-pdf#readme",
   "dependencies": {
     "concat": "0.0.1-security",
-    "phantom-html-to-pdf": "0.4.5"
+    "phantom-html-to-pdf": "0.4.5",
+    "stream-to-array": "2.3.0"
   },
   "devDependencies": {
     "eslint": "3.3.1",

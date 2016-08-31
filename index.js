@@ -1,4 +1,5 @@
 const http = require('http')
+var toArray = require('stream-to-array')
 const conversion = require('phantom-html-to-pdf')()
 
 const server = http.createServer((req, res) => {
@@ -19,9 +20,14 @@ const server = http.createServer((req, res) => {
         return res.end('Error when executing script ' + err.stack)
       }
 
-      res.statusCode = 200
-      res.setHeader('Content-Type', 'application/octet-stream')
-      pdf.stream.pipe(res)
+      toArray(pdf.stream, (err, arr) => {
+        res.statusCode = 200
+        res.setHeader('Content-Type', 'application/json')
+
+        delete pdf.stream
+        pdf.content = Buffer.concat(arr).toString('base64')
+        res.end(JSON.stringify(pdf))
+      })
     })
   })
 })
