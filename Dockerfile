@@ -13,5 +13,7 @@ RUN npm install
 
 COPY . /usr/src/app
 
+COPY . /usr/src/app/patch
+
 EXPOSE 3000
 CMD [ "node", "index.js" ]
