@@ -1,6 +1,8 @@
 const http = require('http')
 var toArray = require('stream-to-array')
-const conversion = require('phantom-html-to-pdf')()
+const conversion = require('phantom-html-to-pdf')({
+  numberOfWorkers: 2
+})
 
 const exactMatch = /(phantomjs-exact-[-0-9]*)/
 
@@ -36,7 +38,7 @@ const server = http.createServer((req, res) => {
       if (err) {
         res.statusCode = 500
         res.setHeader('Content-Type', 'text/plain')
-        return res.end('Error when executing script ' + err.stack)
+        return res.end('Error when phantomjs ' + err.stack)
       }
 
       toArray(pdf.stream, (err, arr) => {
