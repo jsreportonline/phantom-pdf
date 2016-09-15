@@ -1,7 +1,9 @@
 const http = require('http')
 var toArray = require('stream-to-array')
+
 const conversion = require('phantom-html-to-pdf')({
-  numberOfWorkers: 2
+  numberOfWorkers: 2,
+  tmpDir: process.env.temp
 })
 
 const exactMatch = /(phantomjs-exact-[-0-9]*)/
@@ -27,6 +29,12 @@ const server = http.createServer((req, res) => {
     data += chunk.toString()
   })
 
+  const error = (err) => {
+    res.statusCode = 500
+    res.setHeader('Content-Type', 'text/plain')
+    return res.end('Error when executing phantomjs ' + err.stack)
+  }
+
   req.on('end', function () {
     const opts = JSON.parse(data)
 
@@ -36,12 +44,13 @@ const server = http.createServer((req, res) => {
 
     conversion(opts, (err, pdf) => {
       if (err) {
-        res.statusCode = 500
-        res.setHeader('Content-Type', 'text/plain')
-        return res.end('Error when phantomjs ' + err.stack)
+        return error(err)
       }
 
       toArray(pdf.stream, (err, arr) => {
+        if (err) {
+          return error(err)
+        }
         res.statusCode = 200
         res.setHeader('Content-Type', 'application/json')
 
