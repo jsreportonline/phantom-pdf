@@ -18,8 +18,6 @@ const resolvePhantomPath = (phantomPath) => {
   return require('phantomjs').path
 }
 
-var count = 0
-
 const server = http.createServer((req, res) => {
   if (req.method === 'GET') {
     res.statusCode = 200
@@ -35,10 +33,6 @@ const server = http.createServer((req, res) => {
     res.statusCode = 500
     res.setHeader('Content-Type', 'text/plain')
     return res.end('Error when executing phantomjs ' + err.stack)
-  }
-
-  if (count++ > 5) {
-    throw new Error('Intentional fail')
   }
 
   req.on('end', function () {
