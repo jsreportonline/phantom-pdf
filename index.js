@@ -56,6 +56,7 @@ const server = http.createServer((req, res) => {
 
         delete pdf.stream
         pdf.content = Buffer.concat(arr).toString('base64')
+        console.log('done')
         res.end(JSON.stringify(pdf))
       })
     })
