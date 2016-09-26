@@ -15,5 +15,8 @@ COPY . /usr/src/app
 
 COPY . /usr/src/app/patch
 
-EXPOSE 3000
+EXPOSE 4000
+
+HEALTHCHECK CMD curl --fail http://localhost:4000 || exit 1
+
 CMD [ "node", "index.js" ]
