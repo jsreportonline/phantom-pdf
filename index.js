@@ -38,8 +38,6 @@ const server = http.createServer((req, res) => {
   req.on('end', function () {
     const opts = JSON.parse(data)
 
-    console.log(JSON.stringify(opts))
-
     opts.phantomPath = resolvePhantomPath(opts.phantomPath)
 
     conversion(opts, (err, pdf) => {
@@ -56,7 +54,6 @@ const server = http.createServer((req, res) => {
 
         delete pdf.stream
         pdf.content = Buffer.concat(arr).toString('base64')
-        console.log('done')
         res.end(JSON.stringify(pdf))
       })
     })
