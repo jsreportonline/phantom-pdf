@@ -2,7 +2,7 @@ FROM ubuntu:latest
 MAINTAINER Jan Blaha
 EXPOSE 4000
 
-RUN apt-get update && apt-get install -y curl sudo && \
+RUN apt-get update && apt-get install -y curl sudo bzip2 && \
     curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash - && \
     apt-get install -y nodejs
 
