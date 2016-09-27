@@ -4,7 +4,7 @@ EXPOSE 4000
 
 RUN apt-get update && apt-get install -y curl sudo bzip2 && \
     curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash - && \
-    apt-get install -y nodejs
+    apt-get install -y nodejs libfontconfig1 libfontconfig1-dev
 
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
