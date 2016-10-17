@@ -24,12 +24,15 @@ const server = http.createServer((req, res) => {
     res.setHeader('Content-Type', 'text/plain')
     return res.end('OK')
   }
+  console.log('processing request')
+
   var data = ''
   req.on('data', function (chunk) {
     data += chunk.toString()
   })
 
   const error = (err) => {
+    console.error(err)
     res.statusCode = 400
     res.setHeader('Content-Type', 'application/json')
 
@@ -48,6 +51,7 @@ const server = http.createServer((req, res) => {
 
       opts.phantomPath = resolvePhantomPath(opts.phantomPath)
     } catch (e) {
+      console.error(e)
       res.statusCode = 500
       res.setHeader('Content-Type', 'text/plain')
 
@@ -59,10 +63,14 @@ const server = http.createServer((req, res) => {
         return error(err)
       }
 
+      console.log('conversion finished')
+
       toArray(pdf.stream, (err, arr) => {
         if (err) {
           return error(err)
         }
+
+        console.log('sending response')
         res.statusCode = 200
         res.setHeader('Content-Type', 'application/json')
 
