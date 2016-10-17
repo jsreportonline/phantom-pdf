@@ -30,9 +30,15 @@ const server = http.createServer((req, res) => {
   })
 
   const error = (err) => {
-    res.statusCode = 500
-    res.setHeader('Content-Type', 'text/plain')
-    return res.end('Error when executing phantomjs ' + err.stack)
+    res.statusCode = 400
+    res.setHeader('Content-Type', 'application/json')
+
+    return res.end(JSON.stringify({
+      error: {
+        message: err.message,
+        stack: err.stack
+      }
+    }))
   }
 
   req.on('end', function () {
