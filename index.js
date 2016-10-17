@@ -42,9 +42,17 @@ const server = http.createServer((req, res) => {
   }
 
   req.on('end', function () {
-    const opts = JSON.parse(data)
+    let opts
+    try {
+      opts = JSON.parse(data)
 
-    opts.phantomPath = resolvePhantomPath(opts.phantomPath)
+      opts.phantomPath = resolvePhantomPath(opts.phantomPath)
+    } catch (e) {
+      res.statusCode = 500
+      res.setHeader('Content-Type', 'text/plain')
+
+      return res.end(e.stack)
+    }
 
     conversion(opts, (err, pdf) => {
       if (err) {
