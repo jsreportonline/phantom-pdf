@@ -14,7 +14,7 @@ RUN npm install --production
 
 COPY . /usr/src/app
 
-COPY . /usr/src/app/patch
+COPY patch /usr/src/app
 
 HEALTHCHECK CMD curl --fail http://localhost:4000 || exit 1
 
