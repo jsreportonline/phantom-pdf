@@ -49,7 +49,7 @@ const server = http.createServer((req, res) => {
     try {
       opts = JSON.parse(data)
 
-      opts.phantomPath = resolvePhantomPath(opts.phantomPath)
+      opts.phantomPath = resolvePhantomPath(opts.phantomPath)     
     } catch (e) {
       console.error(e)
       res.statusCode = 500
