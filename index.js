@@ -3,7 +3,8 @@ var toArray = require('stream-to-array')
 
 const conversion = require('phantom-html-to-pdf')({
   numberOfWorkers: 2,
-  tmpDir: process.env.temp
+  tmpDir: process.env.temp,
+  timeout: 20000
 })
 
 const exactMatch = /(phantomjs-exact-[-0-9]*)/
@@ -49,7 +50,7 @@ const server = http.createServer((req, res) => {
     try {
       opts = JSON.parse(data)
 
-      opts.phantomPath = resolvePhantomPath(opts.phantomPath)     
+      opts.phantomPath = resolvePhantomPath(opts.phantomPath)
     } catch (e) {
       console.error(e)
       res.statusCode = 500
@@ -82,4 +83,4 @@ const server = http.createServer((req, res) => {
   })
 })
 
-server.listen(4000)
+server.listen(process.env.PORT || 4000)
