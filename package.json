@@ -18,8 +18,8 @@
   },
   "homepage": "https://github.com/jsreportonline/phantom-pdf#readme",
   "dependencies": {
-    "phantom-html-to-pdf": "0.4.5",
-    "phantomjs-exact-2-1-1": "0.0.1",
+    "phantom-html-to-pdf": "0.5.2",
+    "phantomjs-exact-2-1-1": "0.1.0",
     "stream-to-array": "2.3.0"
   },
   "devDependencies": {
