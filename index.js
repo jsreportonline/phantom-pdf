@@ -27,9 +27,9 @@ const server = http.createServer((req, res) => {
   }
   console.log('processing request')
 
-  var data = ''
+  var data = []
   req.on('data', function (chunk) {
-    data += chunk.toString()
+    data.push(chunk)
   })
 
   const error = (err) => {
@@ -48,7 +48,7 @@ const server = http.createServer((req, res) => {
   req.on('end', function () {
     let opts
     try {
-      opts = JSON.parse(data)
+      opts = JSON.parse(Buffer.concat(data).toString())
 
       opts.phantomPath = resolvePhantomPath(opts.phantomPath)
     } catch (e) {
